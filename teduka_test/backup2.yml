@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: yusei861/mongo-backup:v2.0
+            volumeMounts:
+            - mountPath: /backup
+              name: tapioca-volume
+            env:
+            - name: service
+              value: "author"
+            - name: host
+              value: "doktor-m-v2:30736"
+          restartPolicy: Never
+          volumes:
+          - name: tapioca-volume
+            nfs:
+              server: 192.168.100.5
+              path: /volume1/doktor-backup-dev
+

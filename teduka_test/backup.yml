@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "*/3 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: yusei861/mongo-backup
+            env:
+            - name: service
+              value: "author"
+            - name: host
+              value: "doktor-m-v2:30736"
+            command: ["bash", "/backup/backup.sh"]
+          restartPolicy: Never
+
